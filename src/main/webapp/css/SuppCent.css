@@ -55,16 +55,16 @@ html, body, div, ul, li, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, form, input,
 }
 
 .change-code {
-     width: 35%;
-     height: 350px;
-     position: absolute;
-     top: 200px;
-     right: 32.5%;
-     border: 1px solid black;
-     border-radius: 10px;
-     background-color: #fff;
-     display: none;
- }
+    width: 35%;
+    height: 350px;
+    position: absolute;
+    top: 200px;
+    right: 32.5%;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #fff;
+    display: none;
+}
 
 .change-code .close {
     float: right;

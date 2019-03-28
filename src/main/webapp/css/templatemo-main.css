@@ -268,7 +268,7 @@ nav a:hover::before {
   background-size: cover;
 }
 .slides .slide .content {
-	/*! overflow-y: scroll; */
+   /*! overflow-y: scroll; */
   position: relative;
   width: 75%;
   height: 80%;

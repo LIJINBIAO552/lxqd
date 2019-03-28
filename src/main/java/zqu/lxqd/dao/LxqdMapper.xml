@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zqu.lxqd.dao.LxqdMapper">
+  <resultMap id="BaseResultMap" type="zqu.lxqd.bean.Lxqd">
+    <id column="lxqd_id" jdbcType="VARCHAR" property="lxqdId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="AcadDesc" jdbcType="VARCHAR" property="acaddesc" />
+    <result column="StudAffaDiviDesc" jdbcType="VARCHAR" property="studaffadividesc" />
+    <result column="LogiManaDesc" jdbcType="VARCHAR" property="logimanadesc" />
+    <result column="LibraryDesc" jdbcType="VARCHAR" property="librarydesc" />
+    <result column="hotwater1Name" jdbcType="VARCHAR" property="hotwater1name" />
+    <result column="hotwater1Desc" jdbcType="VARCHAR" property="hotwater1desc" />
+    <result column="hotwater2Name" jdbcType="VARCHAR" property="hotwater2name" />
+    <result column="hotwater2Desc" jdbcType="VARCHAR" property="hotwater2desc" />
+    <result column="EducAndCompDesc" jdbcType="VARCHAR" property="educandcompdesc" />
+    <result column="ClassTeacDesc" jdbcType="VARCHAR" property="classteacdesc"/>
+    <result column="remarkDesc" jdbcType="VARCHAR" property="remarkdesc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    lxqd_id, title, AcadDesc, StudAffaDiviDesc, LogiManaDesc, LibraryDesc, hotwater1Name,
+    hotwater1Desc, hotwater2Name, hotwater2Desc, EducAndCompDesc,ClassTeacDesc, remarkDesc
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lxqd
+    where lxqd_id = #{lxqdId,jdbcType=VARCHAR}
+  </select>
+  <select id="select" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from lxqd
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from lxqd
+    where lxqd_id = #{lxqdId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="zqu.lxqd.bean.Lxqd">
+    insert into lxqd (lxqd_id, title, AcadDesc,
+      StudAffaDiviDesc, LogiManaDesc, LibraryDesc, 
+      hotwater1Name, hotwater1Desc, hotwater2Name, 
+      hotwater2Desc, EducAndCompDesc,classteacdesc,remarkDesc
+      )
+    values (#{lxqdId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{acaddesc,jdbcType=VARCHAR},
+      #{studaffadividesc,jdbcType=VARCHAR}, #{logimanadesc,jdbcType=VARCHAR}, #{librarydesc,jdbcType=VARCHAR}, 
+      #{hotwater1name,jdbcType=VARCHAR}, #{hotwater1desc,jdbcType=VARCHAR}, #{hotwater2name,jdbcType=VARCHAR}, 
+      #{hotwater2desc,jdbcType=VARCHAR}, #{educandcompdesc,jdbcType=VARCHAR}, #{classteacdesc,jdbcType=VARCHAR},#{remarkdesc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="zqu.lxqd.bean.Lxqd">
+    insert into lxqd
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lxqdId != null">
+        lxqd_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="acaddesc != null">
+        AcadDesc,
+      </if>
+      <if test="studaffadividesc != null">
+        StudAffaDiviDesc,
+      </if>
+      <if test="logimanadesc != null">
+        LogiManaDesc,
+      </if>
+      <if test="librarydesc != null">
+        LibraryDesc,
+      </if>
+      <if test="hotwater1name != null">
+        hotwater1Name,
+      </if>
+      <if test="hotwater1desc != null">
+        hotwater1Desc,
+      </if>
+      <if test="hotwater2name != null">
+        hotwater2Name,
+      </if>
+      <if test="hotwater2desc != null">
+        hotwater2Desc,
+      </if>
+      <if test="educandcompdesc != null">
+        EducAndCompDesc,
+      </if>
+      <if test="remarkdesc != null">
+        remarkDesc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lxqdId != null">
+        #{lxqdId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="acaddesc != null">
+        #{acaddesc,jdbcType=VARCHAR},
+      </if>
+      <if test="studaffadividesc != null">
+        #{studaffadividesc,jdbcType=VARCHAR},
+      </if>
+      <if test="logimanadesc != null">
+        #{logimanadesc,jdbcType=VARCHAR},
+      </if>
+      <if test="librarydesc != null">
+        #{librarydesc,jdbcType=VARCHAR},
+      </if>
+      <if test="hotwater1name != null">
+        #{hotwater1name,jdbcType=VARCHAR},
+      </if>
+      <if test="hotwater1desc != null">
+        #{hotwater1desc,jdbcType=VARCHAR},
+      </if>
+      <if test="hotwater2name != null">
+        #{hotwater2name,jdbcType=VARCHAR},
+      </if>
+      <if test="hotwater2desc != null">
+        #{hotwater2desc,jdbcType=VARCHAR},
+      </if>
+      <if test="educandcompdesc != null">
+        #{educandcompdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="remarkdesc != null">
+        #{remarkdesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="zqu.lxqd.bean.Lxqd">
+    update lxqd
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="acaddesc != null">
+        AcadDesc = #{acaddesc,jdbcType=VARCHAR},
+      </if>
+      <if test="studaffadividesc != null">
+        StudAffaDiviDesc = #{studaffadividesc,jdbcType=VARCHAR},
+      </if>
+      <if test="logimanadesc != null">
+        LogiManaDesc = #{logimanadesc,jdbcType=VARCHAR},
+      </if>
+      <if test="librarydesc != null">
+        LibraryDesc = #{librarydesc,jdbcType=VARCHAR},
+      </if>
+      <if test="hotwater1name != null">
+        hotwater1Name = #{hotwater1name,jdbcType=VARCHAR},
+      </if>
+      <if test="hotwater1desc != null">
+        hotwater1Desc = #{hotwater1desc,jdbcType=VARCHAR},
+      </if>
+      <if test="hotwater2name != null">
+        hotwater2Name = #{hotwater2name,jdbcType=VARCHAR},
+      </if>
+      <if test="hotwater2desc != null">
+        hotwater2Desc = #{hotwater2desc,jdbcType=VARCHAR},
+      </if>
+      <if test="educandcompdesc != null">
+        EducAndCompDesc = #{educandcompdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="remarkdesc != null">
+        remarkDesc = #{remarkdesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where lxqd_id = #{lxqdId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zqu.lxqd.bean.Lxqd">
+    update lxqd
+    set title = #{title,jdbcType=VARCHAR},
+      AcadDesc = #{acaddesc,jdbcType=VARCHAR},
+      StudAffaDiviDesc = #{studaffadividesc,jdbcType=VARCHAR},
+      LogiManaDesc = #{logimanadesc,jdbcType=VARCHAR},
+      LibraryDesc = #{librarydesc,jdbcType=VARCHAR},
+      hotwater1Name = #{hotwater1name,jdbcType=VARCHAR},
+      hotwater1Desc = #{hotwater1desc,jdbcType=VARCHAR},
+      hotwater2Name = #{hotwater2name,jdbcType=VARCHAR},
+      hotwater2Desc = #{hotwater2desc,jdbcType=VARCHAR},
+      EducAndCompDesc = #{educandcompdesc,jdbcType=VARCHAR},
+      remarkDesc = #{remarkdesc,jdbcType=VARCHAR}
+    where lxqd_id = #{lxqdId,jdbcType=VARCHAR}
+  </update>
+</mapper>

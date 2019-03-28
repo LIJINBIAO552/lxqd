@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zqu.lxqd.dao.SuppcentMapper">
+    <resultMap id="BaseResultMap" type="zqu.lxqd.bean.Suppcent">
+        <id column="stud_id" jdbcType="VARCHAR" property="studId"/>
+        <result column="suppDesc" jdbcType="VARCHAR" property="suppdesc"/>
+        <result column="admin_id" jdbcType="VARCHAR" property="adminId"/>
+        <result column="signtime" jdbcType="TIMESTAMP" property="signtime"/>
+    </resultMap>
+    <resultMap id="StudentsResultMap" type="zqu.lxqd.bean.Suppcent">
+        <id column="stud_id" jdbcType="VARCHAR" property="studId"/>
+        <result column="suppDesc" jdbcType="VARCHAR" property="suppdesc"/>
+        <result column="admin_id" jdbcType="VARCHAR" property="adminId"/>
+        <result column="signtime" jdbcType="TIMESTAMP" property="signtime"/>
+        <association property="students" javaType="Students">
+            <id column="studid" jdbcType="VARCHAR" property="studid"/>
+            <result column="departId" jdbcType="VARCHAR" property="departId"/>
+            <result column="studname" jdbcType="VARCHAR" property="studname"/>
+            <result column="studsex" jdbcType="VARCHAR" property="studsex"/>
+            <result column="studage" jdbcType="VARCHAR" property="studage"/>
+            <result column="studiden" jdbcType="VARCHAR" property="studiden"/>
+            <result column="major" jdbcType="VARCHAR" property="major"/>
+            <result column="sclass" jdbcType="VARCHAR" property="sclass"/>
+            <result column="grade" jdbcType="VARCHAR" property="grade"/>
+            <result column="education" jdbcType="VARCHAR" property="education"/>
+            <result column="dormitory" jdbcType="VARCHAR" property="dormitory"/>
+            <result column="studphone1" jdbcType="VARCHAR" property="studphone1"/>
+            <result column="studphone2" jdbcType="VARCHAR" property="studphone2"/>
+            <result column="birthplace" jdbcType="VARCHAR" property="birthplace"/>
+            <result column="adress" jdbcType="VARCHAR" property="adress"/>
+            <result column="familyphone" jdbcType="VARCHAR" property="familyphone"/>
+            <result column="remark" jdbcType="VARCHAR" property="remark"/>
+            <association property="department" javaType="Department">
+                <id column="departid" jdbcType="VARCHAR" property="departid"/>
+                <result column="departname" jdbcType="VARCHAR" property="departname"/>
+            </association>
+        </association>
+        <association property="admin" javaType="Admin">
+            <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+            <result column="adminname" jdbcType="VARCHAR" property="adminname"/>
+        </association>
+    </resultMap>
+    <sql id="Base_Column_List">
+    stud_id, suppDesc, admin_id, signtime
+  </sql>
+    <sql id="Base_select_column_list">
+    stud_id,stu_depart.departname as departname,major,sclass,grade,education,studname,
+    studsex,studphone1,studphone2,adress,familyphone,suppDesc, adminname, signtime
+  </sql>
+    <select id="simpleSelectByStudents" parameterType="Students" resultMap="StudentsResultMap">
+        select
+        <include refid="Base_select_column_list"/>
+        from suppcent LEFT JOIN admin on admin.adminid = suppcent.admin_id
+        LEFT JOIN (SELECT studid,students.departId,departname,major,sclass,grade,education,studname,studsex,studphone1,studphone2,adress,familyphone
+        FROM students left join department ON students.departId = department.departid) as stu_depart on stu_depart.studid = suppcent.stud_id
+        <where>
+            <choose>
+                <when test="studid != null and studid != ''">
+                    studid = #{studid,jdbcType=VARCHAR}
+                </when>
+                <when test="departId != null and departId != ''">
+                    and stu_depart.departId = #{departId,jdbcType=VARCHAR}
+                </when>
+                <when test="department != null and department.departname != null and department.departname != ''">
+                    and stu_depart.departname like '%' #{department.departname,jdbcType=VARCHAR} '%'
+                </when>
+                <when test="major != null and major != ''">
+                    and major like '%' #{major,jdbcType=VARCHAR} '%'
+                </when>
+                <when test="sclass != null and sclass != ''">
+                    and sclass like '%' #{sclass,jdbcType=VARCHAR} '%'
+                </when>
+                <when test="grade != null and grade != ''">
+                    and grade like '%' #{grade,jdbcType=VARCHAR} '%'
+                </when>
+                <when test="studname != null and studname != ''">
+                    and studname like '%' #{studname,jdbcType=VARCHAR} '%'
+                </when>
+                <when test="studsex != null and studsex != ''">
+                    and studsex = #{studsex,jdbcType=VARCHAR}
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <select id="simpleSelectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from suppcent
+        where stud_id = #{studId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="StudentsResultMap">
+        select
+        <include refid="Base_select_column_list"/>
+        from suppcent LEFT JOIN admin on admin.adminid = suppcent.admin_id
+        LEFT JOIN (SELECT studid,departname,major,sclass,grade,education,studname,studsex,studphone1,studphone2,adress,familyphone
+        FROM students left join department ON students.departId = department.departid) as stu_depart on stu_depart.studid = suppcent.stud_id
+        where stud_id = #{studId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByStudentsName" parameterType="java.lang.String" resultMap="StudentsResultMap">
+        select
+        <include refid="Base_select_column_list"/>
+        from suppcent LEFT JOIN admin on admin.adminid = suppcent.admin_id
+        LEFT JOIN (SELECT studid,departname,major,sclass,grade,education,studname,studsex,studphone1,studphone2,adress,familyphone
+        FROM students left join department ON students.departId = department.departid) as stu_depart on stu_depart.studid = suppcent.stud_id
+        where studname like '%' #{studname,jdbcType=VARCHAR} '%'
+    </select>
+    <select id="selectByDepartName" parameterType="java.lang.String" resultMap="StudentsResultMap">
+        select
+        <include refid="Base_select_column_list"/>
+        from suppcent LEFT JOIN admin on admin.adminid = suppcent.admin_id
+        LEFT JOIN (SELECT studid,departname,major,sclass,grade,education,studname,studsex,studphone1,studphone2,adress,familyphone
+        FROM students left join department ON students.departId = department.departid) as stu_depart on stu_depart.studid = suppcent.stud_id
+        where stu_depart.departname like '%' #{departname,jdbcType=VARCHAR} '%'
+    </select>
+    <select id="selectByStudentsSex" parameterType="java.lang.String" resultMap="StudentsResultMap">
+        select
+        <include refid="Base_select_column_list"/>
+        from suppcent LEFT JOIN admin on admin.adminid = suppcent.admin_id
+        LEFT JOIN (SELECT studid,departname,major,sclass,grade,education,studname,studsex,studphone1,studphone2,adress,familyphone
+        FROM students left join department ON students.departId = department.departid) as stu_depart on stu_depart.studid = suppcent.stud_id
+        where studsex like '%' #{studsex,jdbcType=VARCHAR} '%'
+    </select>
+    <select id="selectByStudentsMajor" parameterType="java.lang.String" resultMap="StudentsResultMap">
+        select
+        <include refid="Base_select_column_list"/>
+        from suppcent LEFT JOIN admin on admin.adminid = suppcent.admin_id
+        LEFT JOIN (SELECT studid,departname,major,sclass,grade,education,studname,studsex,studphone1,studphone2,adress,familyphone
+        FROM students left join department ON students.departId = department.departid) as stu_depart on stu_depart.studid = suppcent.stud_id
+        where major like '%' #{major,jdbcType=VARCHAR} '%'
+    </select>
+
+    <select id="selectByStudentsSclass" parameterType="java.lang.String" resultMap="StudentsResultMap">
+        select
+        <include refid="Base_select_column_list"/>
+        from suppcent LEFT JOIN admin on admin.adminid = suppcent.admin_id
+        LEFT JOIN (SELECT studid,departname,major,sclass,grade,education,studname,studsex,studphone1,studphone2,adress,familyphone
+        FROM students left join department ON students.departId = department.departid) as stu_depart on stu_depart.studid = suppcent.stud_id
+        where sclass like '%' #{sclass,jdbcType=VARCHAR} '%'
+    </select>
+
+    <select id="selectByStudentsGrade" parameterType="java.lang.String" resultMap="StudentsResultMap">
+        select
+        <include refid="Base_select_column_list"/>
+        from suppcent LEFT JOIN admin on admin.adminid = suppcent.admin_id
+        LEFT JOIN (SELECT studid,departname,major,sclass,grade,education,studname,studsex,studphone1,studphone2,adress,familyphone
+        FROM students left join department ON students.departId = department.departid) as stu_depart on stu_depart.studid = suppcent.stud_id
+        where grade like '%' #{grade,jdbcType=VARCHAR} '%'
+    </select>
+    <select id="selectByStudentsEducation" parameterType="java.lang.String" resultMap="StudentsResultMap">
+        select
+        <include refid="Base_select_column_list"/>
+        from suppcent LEFT JOIN admin on admin.adminid = suppcent.admin_id
+        LEFT JOIN (SELECT studid,departname,major,sclass,grade,education,studname,studsex,studphone1,studphone2,adress,familyphone
+        FROM students left join department ON students.departId = department.departid) as stu_depart on stu_depart.studid = suppcent.stud_id
+        where education like '%' #{education,jdbcType=VARCHAR} '%'
+    </select>
+    <select id="selectBySuppDesc" parameterType="java.lang.String" resultMap="StudentsResultMap">
+        select
+        <include refid="Base_select_column_list"/>
+        from suppcent LEFT JOIN admin on admin.adminid = suppcent.admin_id
+        LEFT JOIN (SELECT studid,departname,major,sclass,grade,education,studname,studsex,studphone1,studphone2,adress,familyphone
+        FROM students left join department ON students.departId = department.departid) as stu_depart on stu_depart.studid = suppcent.stud_id
+        where suppdesc like '%' #{suppdesc,jdbcType=VARCHAR} '%'
+    </select>
+    <select id="selectByAdminname" parameterType="java.lang.String" resultMap="StudentsResultMap">
+        select
+        <include refid="Base_select_column_list"/>
+        from suppcent LEFT JOIN admin on admin.adminid = suppcent.admin_id
+        LEFT JOIN (SELECT studid,departname,major,sclass,grade,education,studname,studsex,studphone1,studphone2,adress,familyphone
+        FROM students left join department ON students.departId = department.departid) as stu_depart on stu_depart.studid = suppcent.stud_id
+        where adminname like '%' #{adminname,jdbcType=VARCHAR} '%'
+    </select>
+
+    <select id="selectAllSuppCent" resultMap="StudentsResultMap">
+        select
+        <include refid="Base_select_column_list"/>
+        from suppcent LEFT JOIN admin on admin.adminid = suppcent.admin_id
+        LEFT JOIN (SELECT studid,departname,major,sclass,grade,education,studname,studsex,studphone1,studphone2,adress,familyphone
+        FROM students left join department ON students.departId = department.departid) as stu_depart on stu_depart.studid = suppcent.stud_id
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from suppcent
+    where stud_id = #{studId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="zqu.lxqd.bean.Suppcent">
+    insert into suppcent (stud_id, suppDesc, admin_id, 
+      signtime)
+    values (#{studId,jdbcType=VARCHAR}, #{suppdesc,jdbcType=VARCHAR}, #{adminId,jdbcType=VARCHAR}, 
+      #{signtime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="zqu.lxqd.bean.Suppcent">
+        insert into suppcent
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="studId != null">
+                stud_id,
+            </if>
+            <if test="suppdesc != null">
+                suppDesc,
+            </if>
+            <if test="adminId != null">
+                admin_id,
+            </if>
+            <if test="signtime != null">
+                signtime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="studId != null">
+                #{studId,jdbcType=VARCHAR},
+            </if>
+            <if test="suppdesc != null">
+                #{suppdesc,jdbcType=VARCHAR},
+            </if>
+            <if test="adminId != null">
+                #{adminId,jdbcType=VARCHAR},
+            </if>
+            <if test="signtime != null">
+                #{signtime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="zqu.lxqd.bean.Suppcent">
+        update suppcent
+        <set>
+            <if test="suppdesc != null">
+                suppDesc = #{suppdesc,jdbcType=VARCHAR},
+            </if>
+            <if test="adminId != null">
+                admin_id = #{adminId,jdbcType=VARCHAR},
+            </if>
+            <if test="signtime != null">
+                signtime = #{signtime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where stud_id = #{studId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="zqu.lxqd.bean.Suppcent">
+    update suppcent
+    set suppDesc = #{suppdesc,jdbcType=VARCHAR},
+      admin_id = #{adminId,jdbcType=VARCHAR},
+      signtime = #{signtime,jdbcType=TIMESTAMP}
+    where stud_id = #{studId,jdbcType=VARCHAR}
+  </update>
+</mapper>

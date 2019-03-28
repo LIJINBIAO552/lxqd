@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zqu.lxqd.dao.EducandcompMapper">
+  <resultMap id="BaseResultMap" type="zqu.lxqd.bean.Educandcomp">
+    <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+    <result column="rentDesc" jdbcType="VARCHAR" property="rentdesc" />
+    <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+    <result column="signtime" jdbcType="TIMESTAMP" property="signtime" />
+    <result column="sealer" jdbcType="VARCHAR" property="sealer" />
+    <result column="sealtime" jdbcType="TIMESTAMP" property="sealtime" />
+  </resultMap>
+  <resultMap id="StudentsResultMap" type="zqu.lxqd.bean.Educandcomp">
+    <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+    <result column="rentDesc" jdbcType="VARCHAR" property="rentdesc" />
+    <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+    <result column="signtime" jdbcType="TIMESTAMP" property="signtime" />
+    <result column="sealer" jdbcType="VARCHAR" property="sealer" />
+    <result column="sealtime" jdbcType="TIMESTAMP" property="sealtime" />
+    <association property="students" javaType="Students">
+      <id column="studid" jdbcType="VARCHAR" property="studid"/>
+      <result column="departId" jdbcType="VARCHAR" property="departId"/>
+      <result column="studname" jdbcType="VARCHAR" property="studname"/>
+      <result column="studsex" jdbcType="VARCHAR" property="studsex"/>
+      <result column="studage" jdbcType="VARCHAR" property="studage"/>
+      <result column="studiden" jdbcType="VARCHAR" property="studiden"/>
+      <result column="major" jdbcType="VARCHAR" property="major"/>
+      <result column="sclass" jdbcType="VARCHAR" property="sclass"/>
+      <result column="grade" jdbcType="VARCHAR" property="grade"/>
+      <result column="education" jdbcType="VARCHAR" property="education"/>
+      <result column="dormitory" jdbcType="VARCHAR" property="dormitory"/>
+      <result column="studphone1" jdbcType="VARCHAR" property="studphone1"/>
+      <result column="studphone2" jdbcType="VARCHAR" property="studphone2"/>
+      <result column="birthplace" jdbcType="VARCHAR" property="birthplace"/>
+      <result column="adress" jdbcType="VARCHAR" property="adress"/>
+      <result column="familyphone" jdbcType="VARCHAR" property="familyphone"/>
+      <result column="remark" jdbcType="VARCHAR" property="remark"/>
+      <association property="department" javaType="Department">
+        <id column="departid" jdbcType="VARCHAR" property="departid"/>
+        <result column="departname" jdbcType="VARCHAR" property="departname"/>
+      </association>
+    </association>
+    <association property="admin" javaType="Admin" >
+      <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+      <result column="adminname" jdbcType="VARCHAR" property="adminname"/>
+    </association>
+    <association property="admin1" javaType="Admin" >
+      <id column="sealer" jdbcType="VARCHAR" property="adminid"/>
+      <result column="adminname" jdbcType="VARCHAR" property="adminname"/>
+    </association>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    stud_id, rentDesc, admin_id, signtime, sealer, sealtime
+  </sql>
+  <sql id="Base_select_column_list">
+    stud_id,stu_depart.departname as departname,major,sclass,grade,education,studname,
+    studsex,studphone1,studphone2,adress,familyphone,rentDesc, admin_id, signtime, sealer, sealtime
+  </sql>
+
+  <select id="simpleSelectByStudents" parameterType="Students" resultMap="StudentsResultMap">
+    select
+    <include refid="Base_select_column_list"/>
+    from educandcomp LEFT JOIN admin on admin.adminid = educandcomp.admin_id
+    LEFT JOIN (SELECT studid,students.departId,departname,major,sclass,grade,education,studname,studsex,studphone1,studphone2,adress,familyphone
+    FROM students left join department ON students.departId = department.departid) as stu_depart on stu_depart.studid = educandcomp.stud_id
+    <where>
+      <choose>
+        <when test="studid != null and studid != ''">
+          studid = #{studid,jdbcType=VARCHAR}
+        </when>
+        <when test="departId != null and departId != ''">
+          and stu_depart.departId = #{departId,jdbcType=VARCHAR}
+        </when>
+        <when test="department != null and department.departname != null and department.departname != ''">
+          and stu_depart.departname like '%' #{department.departname,jdbcType=VARCHAR} '%'
+        </when>
+        <when test="major != null and major != ''">
+          and major like '%' #{major,jdbcType=VARCHAR} '%'
+        </when>
+        <when test="sclass != null and sclass != ''">
+          and sclass like '%' #{sclass,jdbcType=VARCHAR} '%'
+        </when>
+        <when test="grade != null and grade != ''">
+          and grade like '%' #{grade,jdbcType=VARCHAR} '%'
+        </when>
+        <when test="studname != null and studname != ''">
+          and studname like '%' #{studname,jdbcType=VARCHAR} '%'
+        </when>
+        <when test="studsex != null and studsex != ''">
+          and studsex = #{studsex,jdbcType=VARCHAR}
+        </when>
+      </choose>
+    </where>
+  </select>
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from educandcomp
+    where stud_id = #{studId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAllEducandcomp" resultMap="StudentsResultMap">
+    select
+    <include refid="Base_select_column_list"/>
+    from educandcomp LEFT JOIN admin on admin.adminid = educandcomp.admin_id
+    LEFT JOIN admin as sealer on sealer.adminid = educandcomp.sealer
+    LEFT JOIN (SELECT studid,departname,major,sclass,grade,education,studname,studsex,studphone1,studphone2,adress,familyphone
+    FROM students left join department ON students.departId = department.departid) as stu_depart on stu_depart.studid = educandcomp.stud_id
+  </select>
+  <select id="selectByEducandcomp" resultMap="StudentsResultMap">
+    select
+    <include refid="Base_select_column_list"/>
+    from educandcomp LEFT JOIN admin on admin.adminid = educandcomp.admin_id
+    LEFT JOIN admin as sealer on sealer.adminid = educandcomp.sealer
+    LEFT JOIN (SELECT studid,departname,major,sclass,grade,education,studname,studsex,studphone1,studphone2,adress,familyphone
+    FROM students left join department ON students.departId = department.departid) as stu_depart on stu_depart.studid = educandcomp.stud_id
+    <where>
+      <choose>
+        <when test="studId != null and studId != ''">
+          stud_id = #{studId,jdbcType=VARCHAR}
+        </when>
+        <when test="adminId != null and adminId != ''">
+          and admin_id = #{adminId,jdbcType=VARCHAR}
+        </when>
+        <when test="signtime != null and signtime != ''">
+          and signtime like '%' #{signtime,jdbcType=VARCHAR} '%'
+        </when>
+      </choose>
+    </where>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from educandcomp
+    where stud_id = #{studId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="zqu.lxqd.bean.Educandcomp">
+    insert into educandcomp (stud_id, rentDesc, admin_id, 
+      signtime, sealer, sealtime
+      )
+    values (#{studId,jdbcType=VARCHAR}, #{rentdesc,jdbcType=VARCHAR}, #{adminId,jdbcType=VARCHAR}, 
+      #{signtime,jdbcType=TIMESTAMP}, #{sealer,jdbcType=VARCHAR}, #{sealtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="zqu.lxqd.bean.Educandcomp">
+    insert into educandcomp
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studId != null">
+        stud_id,
+      </if>
+      <if test="rentdesc != null">
+        rentDesc,
+      </if>
+      <if test="adminId != null">
+        admin_id,
+      </if>
+      <if test="signtime != null">
+        signtime,
+      </if>
+      <if test="sealer != null">
+        sealer,
+      </if>
+      <if test="sealtime != null">
+        sealtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="studId != null">
+        #{studId,jdbcType=VARCHAR},
+      </if>
+      <if test="rentdesc != null">
+        #{rentdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="signtime != null">
+        #{signtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sealer != null">
+        #{sealer,jdbcType=VARCHAR},
+      </if>
+      <if test="sealtime != null">
+        #{sealtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="zqu.lxqd.bean.Educandcomp">
+    update educandcomp
+    <set>
+      <if test="rentdesc != null">
+        rentDesc = #{rentdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null">
+        admin_id = #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="signtime != null">
+        signtime = #{signtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sealer != null">
+        sealer = #{sealer,jdbcType=VARCHAR},
+      </if>
+      <if test="sealtime != null">
+        sealtime = #{sealtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where stud_id = #{studId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zqu.lxqd.bean.Educandcomp">
+    update educandcomp
+    set rentDesc = #{rentdesc,jdbcType=VARCHAR},
+      admin_id = #{adminId,jdbcType=VARCHAR},
+      signtime = #{signtime,jdbcType=TIMESTAMP},
+      sealer = #{sealer,jdbcType=VARCHAR},
+      sealtime = #{sealtime,jdbcType=TIMESTAMP}
+    where stud_id = #{studId,jdbcType=VARCHAR}
+  </update>
+</mapper>

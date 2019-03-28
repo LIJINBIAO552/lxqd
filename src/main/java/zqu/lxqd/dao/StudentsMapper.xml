@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zqu.lxqd.dao.StudentsMapper">
+    <resultMap id="BaseResultMap" type="zqu.lxqd.bean.Students">
+        <id column="studid" jdbcType="VARCHAR" property="studid"/>
+        <result column="studpass" jdbcType="VARCHAR" property="studpass"/>
+        <result column="departId" jdbcType="VARCHAR" property="departId"/>
+        <result column="studname" jdbcType="VARCHAR" property="studname"/>
+        <result column="studsex" jdbcType="VARCHAR" property="studsex"/>
+        <result column="studage" jdbcType="VARCHAR" property="studage"/>
+        <result column="studiden" jdbcType="VARCHAR" property="studiden"/>
+        <result column="major" jdbcType="VARCHAR" property="major"/>
+        <result column="sclass" jdbcType="VARCHAR" property="sclass"/>
+        <result column="grade" jdbcType="VARCHAR" property="grade"/>
+        <result column="education" jdbcType="VARCHAR" property="education"/>
+        <result column="dormitory" jdbcType="VARCHAR" property="dormitory"/>
+        <result column="studphone1" jdbcType="VARCHAR" property="studphone1"/>
+        <result column="studphone2" jdbcType="VARCHAR" property="studphone2"/>
+        <result column="birthplace" jdbcType="VARCHAR" property="birthplace"/>
+        <result column="adress" jdbcType="VARCHAR" property="adress"/>
+        <result column="familyphone" jdbcType="VARCHAR" property="familyphone"/>
+        <result column="studphoto" jdbcType="VARCHAR" property="studphoto"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <association property="department" javaType="zqu.lxqd.bean.Department">
+            <id column="departid" jdbcType="VARCHAR" property="departid"/>
+            <result column="departname" jdbcType="VARCHAR" property="departname"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="selectLXQDBaseResultMap" type="zqu.lxqd.bean.Students">
+        <id column="studid" jdbcType="VARCHAR" property="studid"/>
+        <result column="studpass" jdbcType="VARCHAR" property="studpass"/>
+        <result column="departId" jdbcType="VARCHAR" property="departId"/>
+        <result column="studname" jdbcType="VARCHAR" property="studname"/>
+        <result column="studsex" jdbcType="VARCHAR" property="studsex"/>
+        <result column="studage" jdbcType="VARCHAR" property="studage"/>
+        <result column="studiden" jdbcType="VARCHAR" property="studiden"/>
+        <result column="major" jdbcType="VARCHAR" property="major"/>
+        <result column="sclass" jdbcType="VARCHAR" property="sclass"/>
+        <result column="grade" jdbcType="VARCHAR" property="grade"/>
+        <result column="education" jdbcType="VARCHAR" property="education"/>
+        <result column="dormitory" jdbcType="VARCHAR" property="dormitory"/>
+        <result column="studphone1" jdbcType="VARCHAR" property="studphone1"/>
+        <result column="studphone2" jdbcType="VARCHAR" property="studphone2"/>
+        <result column="birthplace" jdbcType="VARCHAR" property="birthplace"/>
+        <result column="adress" jdbcType="VARCHAR" property="adress"/>
+        <result column="familyphone" jdbcType="VARCHAR" property="familyphone"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <association property="department" javaType="zqu.lxqd.bean.Department">
+            <id column="departid" jdbcType="VARCHAR" property="departid"/>
+            <result column="departname" jdbcType="VARCHAR" property="departname"/>
+        </association>
+        <association property="acadsign" javaType="zqu.lxqd.bean.Acadsign">
+            <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+            <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+            <result column="signtime" jdbcType="TIMESTAMP" property="signtime" />
+            <association property="admin" javaType="zqu.lxqd.bean.Admin">
+                <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+                <result column="adminname" jdbcType="VARCHAR" property="adminname"/>
+                <result column="adminsex" jdbcType="VARCHAR" property="adminsex"/>
+                <result column="departid" jdbcType="VARCHAR" property="departid"/>
+                <result column="adminphone" jdbcType="VARCHAR" property="adminphone"/>
+                <result column="adminmail" jdbcType="VARCHAR" property="adminmail"/>
+            </association>
+        </association>
+        <association property="clasteacsign" javaType="zqu.lxqd.bean.Clasteacsign">
+            <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+            <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+            <result column="signtime" jdbcType="TIMESTAMP" property="signtime" />
+            <association property="admin" javaType="zqu.lxqd.bean.Admin">
+                <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+                <result column="adminname" jdbcType="VARCHAR" property="adminname"/>
+                <result column="adminsex" jdbcType="VARCHAR" property="adminsex"/>
+                <result column="departid" jdbcType="VARCHAR" property="departid"/>
+                <result column="adminphone" jdbcType="VARCHAR" property="adminphone"/>
+                <result column="adminmail" jdbcType="VARCHAR" property="adminmail"/>
+            </association>
+        </association>
+        <association property="dormmana" javaType="zqu.lxqd.bean.Dormmana">
+            <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+            <result column="dormDesc" jdbcType="VARCHAR" property="dormdesc" />
+            <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+            <result column="signtime" jdbcType="TIMESTAMP" property="signtime" />
+            <association property="admin" javaType="zqu.lxqd.bean.Admin">
+                <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+                <result column="adminname" jdbcType="VARCHAR" property="adminname"/>
+                <result column="adminsex" jdbcType="VARCHAR" property="adminsex"/>
+                <result column="departid" jdbcType="VARCHAR" property="departid"/>
+                <result column="adminphone" jdbcType="VARCHAR" property="adminphone"/>
+                <result column="adminmail" jdbcType="VARCHAR" property="adminmail"/>
+            </association>
+        </association>
+        <association property="drinkwater" javaType="zqu.lxqd.bean.Drinkwater">
+            <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+            <result column="dwPay" jdbcType="VARCHAR" property="dwpay" />
+            <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+            <result column="signtime" jdbcType="TIMESTAMP" property="signtime" />
+            <association property="admin" javaType="zqu.lxqd.bean.Admin">
+                <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+                <result column="adminname" jdbcType="VARCHAR" property="adminname"/>
+                <result column="adminsex" jdbcType="VARCHAR" property="adminsex"/>
+                <result column="departid" jdbcType="VARCHAR" property="departid"/>
+                <result column="adminphone" jdbcType="VARCHAR" property="adminphone"/>
+                <result column="adminmail" jdbcType="VARCHAR" property="adminmail"/>
+            </association>
+        </association>
+        <association property="educandcomp" javaType="zqu.lxqd.bean.Educandcomp">
+            <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+            <result column="rentDesc" jdbcType="VARCHAR" property="rentdesc" />
+            <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+            <result column="signtime" jdbcType="TIMESTAMP" property="signtime" />
+            <result column="sealer" jdbcType="VARCHAR" property="sealer" />
+            <result column="sealtime" jdbcType="TIMESTAMP" property="sealtime" />
+            <collection property="admin" ofType="zqu.lxqd.bean.Admin">
+                <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+                <result column="adminname" jdbcType="VARCHAR" property="adminname"/>
+                <result column="adminsex" jdbcType="VARCHAR" property="adminsex"/>
+                <result column="departid" jdbcType="VARCHAR" property="departid"/>
+                <result column="adminphone" jdbcType="VARCHAR" property="adminphone"/>
+                <result column="adminmail" jdbcType="VARCHAR" property="adminmail"/>
+            </collection>
+        </association>
+        <association property="hotwater1" javaType="zqu.lxqd.bean.Hotwater1">
+            <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+            <result column="hw1Pay" jdbcType="VARCHAR" property="hw1pay" />
+            <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+            <result column="signtime" jdbcType="TIMESTAMP" property="signtime" />
+            <result column="sealer" jdbcType="VARCHAR" property="sealer" />
+            <result column="sealtime" jdbcType="TIMESTAMP" property="sealtime" />
+            <collection property="admin" ofType="zqu.lxqd.bean.Admin">
+                <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+                <result column="adminname" jdbcType="VARCHAR" property="adminname"/>
+                <result column="adminsex" jdbcType="VARCHAR" property="adminsex"/>
+                <result column="departid" jdbcType="VARCHAR" property="departid"/>
+                <result column="adminphone" jdbcType="VARCHAR" property="adminphone"/>
+                <result column="adminmail" jdbcType="VARCHAR" property="adminmail"/>
+            </collection>
+        </association>
+        <association property="hotwater2" javaType="zqu.lxqd.bean.Hotwater2">
+            <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+            <result column="hw2Pay" jdbcType="VARCHAR" property="hw2pay" />
+            <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+            <result column="signtime" jdbcType="TIMESTAMP" property="signtime" />
+            <result column="sealer" jdbcType="VARCHAR" property="sealer" />
+            <result column="sealtime" jdbcType="TIMESTAMP" property="sealtime" />
+            <collection property="admin" ofType="zqu.lxqd.bean.Admin">
+                <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+                <result column="adminname" jdbcType="VARCHAR" property="adminname"/>
+                <result column="adminsex" jdbcType="VARCHAR" property="adminsex"/>
+                <result column="departid" jdbcType="VARCHAR" property="departid"/>
+                <result column="adminphone" jdbcType="VARCHAR" property="adminphone"/>
+                <result column="adminmail" jdbcType="VARCHAR" property="adminmail"/>
+            </collection>
+        </association>
+        <association property="hydropower" javaType="zqu.lxqd.bean.Hydropower">
+            <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+            <result column="hydrPay" jdbcType="VARCHAR" property="hydrpay" />
+            <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+            <result column="signtime" jdbcType="TIMESTAMP" property="signtime" />
+            <association property="admin" javaType="zqu.lxqd.bean.Admin">
+                <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+                <result column="adminname" jdbcType="VARCHAR" property="adminname"/>
+                <result column="adminsex" jdbcType="VARCHAR" property="adminsex"/>
+                <result column="departid" jdbcType="VARCHAR" property="departid"/>
+                <result column="adminphone" jdbcType="VARCHAR" property="adminphone"/>
+                <result column="adminmail" jdbcType="VARCHAR" property="adminmail"/>
+            </association>
+        </association>
+        <association property="library" javaType="zqu.lxqd.bean.Library">
+            <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+            <result column="neDesc" jdbcType="VARCHAR" property="nedesc" />
+            <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+            <result column="signtime" jdbcType="TIMESTAMP" property="signtime" />
+            <result column="sealer" jdbcType="VARCHAR" property="sealer" />
+            <result column="sealtime" jdbcType="TIMESTAMP" property="sealtime" />
+            <collection property="admin" ofType="zqu.lxqd.bean.Admin">
+                <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+                <result column="adminname" jdbcType="VARCHAR" property="adminname"/>
+                <result column="adminsex" jdbcType="VARCHAR" property="adminsex"/>
+                <result column="departid" jdbcType="VARCHAR" property="departid"/>
+                <result column="adminphone" jdbcType="VARCHAR" property="adminphone"/>
+                <result column="adminmail" jdbcType="VARCHAR" property="adminmail"/>
+            </collection>
+        </association>
+        <association property="logimana" javaType="zqu.lxqd.bean.Logimana">
+            <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+            <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+            <result column="sealtime" jdbcType="TIMESTAMP" property="sealtime" />
+            <association property="admin" javaType="zqu.lxqd.bean.Admin">
+                <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+                <result column="adminname" jdbcType="VARCHAR" property="adminname"/>
+                <result column="adminsex" jdbcType="VARCHAR" property="adminsex"/>
+                <result column="departid" jdbcType="VARCHAR" property="departid"/>
+                <result column="adminphone" jdbcType="VARCHAR" property="adminphone"/>
+                <result column="adminmail" jdbcType="VARCHAR" property="adminmail"/>
+            </association>
+        </association>
+        <association property="studaffadivi" javaType="zqu.lxqd.bean.Studaffadivi">
+            <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+            <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+            <result column="sealtime" jdbcType="TIMESTAMP" property="sealtime" />
+            <association property="admin" javaType="zqu.lxqd.bean.Admin">
+                <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+                <result column="adminname" jdbcType="VARCHAR" property="adminname"/>
+                <result column="adminsex" jdbcType="VARCHAR" property="adminsex"/>
+                <result column="departid" jdbcType="VARCHAR" property="departid"/>
+                <result column="adminphone" jdbcType="VARCHAR" property="adminphone"/>
+                <result column="adminmail" jdbcType="VARCHAR" property="adminmail"/>
+            </association>
+        </association>
+        <association property="suppcent" javaType="zqu.lxqd.bean.Suppcent">
+            <id column="stud_id" jdbcType="VARCHAR" property="studId"/>
+            <result column="suppDesc" jdbcType="VARCHAR" property="suppdesc"/>
+            <result column="admin_id" jdbcType="VARCHAR" property="adminId"/>
+            <result column="signtime" jdbcType="TIMESTAMP" property="signtime"/>
+            <association property="admin" javaType="zqu.lxqd.bean.Admin">
+                <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+                <result column="adminname" jdbcType="VARCHAR" property="adminname"/>
+                <result column="adminsex" jdbcType="VARCHAR" property="adminsex"/>
+                <result column="departid" jdbcType="VARCHAR" property="departid"/>
+                <result column="adminphone" jdbcType="VARCHAR" property="adminphone"/>
+                <result column="adminmail" jdbcType="VARCHAR" property="adminmail"/>
+            </association>
+        </association>
+    </resultMap>
+    <sql id="Base_Column_List">
+    studid, studpass, students.departid,department.departname, studname, studsex, studage, studiden, major, sclass,
+    grade, education, dormitory, studphone1, studphone2, birthplace, adress, familyphone, studphoto,
+    remark
+    </sql>
+
+    <select id="selectByStudents" parameterType="Students" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from students left join department on students.departId = department.departid
+        <where>
+            <choose>
+                <when test="studid != null and studid != ''">
+                    studid = #{studid,jdbcType=VARCHAR}
+                </when>
+                <when test="departId != null and departId != ''">
+                    and students.departId = #{departId,jdbcType=VARCHAR}
+                </when>
+                <when test="department.departname != null and department.departname != ''">
+                    and department.departname like '%' #{departname,jdbcType=VARCHAR} '%'
+                </when>
+                <when test="studname != null and studname != ''">
+                    and studname like '%' #{studname,jdbcType=VARCHAR} '%'
+                </when>
+                <when test="studsex != null and studsex != ''">
+                    and studsex like '%' #{studsex,jdbcType=VARCHAR} '%'
+                </when>
+                <when test="studage != null and studage != ''">
+                    and studage = #{studage,jdbcType=VARCHAR}
+                </when>
+                <when test="studiden != null and studiden != ''">
+                    and studiden = #{studiden,jdbcType=VARCHAR}
+                </when>
+                <when test="major != null and major != ''">
+                    and major like '%' #{major,jdbcType=VARCHAR} '%'
+                </when>
+                <when test="sclass != null and sclass != ''">
+                    and sclass like '%' #{sclass,jdbcType=VARCHAR} '%'
+                </when>
+                <when test="grade != null and grade != ''">
+                    and grade like '%' #{grade,jdbcType=VARCHAR} '%'
+                </when>
+                <when test="education != null and education != ''">
+                    and education = #{education,jdbcType=VARCHAR}
+                </when>
+                <when test="dormitory != null and dormitory != ''">
+                    and dormitory = #{dormitory,jdbcType=VARCHAR}
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from students left join department on students.departId = department.departid
+        where studid = #{studid,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectLikePrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from students left join department on students.departId = department.departid
+        where studid like '%' #{studid,jdbcType=VARCHAR} '%'
+    </select>
+
+    <select id="selectByStudName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from students left join department on students.departId = department.departid
+        where studname like '%' #{studname,jdbcType=VARCHAR} '%'
+    </select>
+
+    <select id="selectAllStudents" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from students left join department on students.departId = department.departid
+    </select>
+
+    <select id="selectAllStudentsBylimit" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from students left join department on students.departId = department.departid
+        <if test="page != null and limit != null">
+            limit #{page},#{limit}
+        </if>
+    </select>
+
+    <select id="countAllStudents" resultType="java.lang.Integer">
+        select count(*)
+        from students
+    </select>
+
+    <select id="selectLXQD" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from students left join department on students.departId = department.departid
+        where studid = #{studid,jdbcType=VARCHAR}
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from students
+    where studid = #{studid,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="zqu.lxqd.bean.Students">
+    insert into students (studid, studpass, departId,
+      studname, studsex, studage, 
+      studiden, major, sclass, 
+      grade, education, dormitory, 
+      studphone1, studphone2, birthplace, 
+      adress, familyphone, remark
+      )
+    values (#{studid,jdbcType=VARCHAR}, #{studpass,jdbcType=VARCHAR}, #{departId,jdbcType=VARCHAR},
+      #{studname,jdbcType=VARCHAR}, #{studsex,jdbcType=VARCHAR}, #{studage,jdbcType=VARCHAR}, 
+      #{studiden,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{sclass,jdbcType=VARCHAR}, 
+      #{grade,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, #{dormitory,jdbcType=VARCHAR}, 
+      #{studphone1,jdbcType=VARCHAR}, #{studphone2,jdbcType=VARCHAR}, #{birthplace,jdbcType=VARCHAR}, 
+      #{adress,jdbcType=VARCHAR}, #{familyphone,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="zqu.lxqd.bean.Students">
+        insert into students
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="studid != null">
+                studid,
+            </if>
+            <if test="studpass != null">
+                studpass,
+            </if>
+            <if test="departId != null">
+                departId,
+            </if>
+            <if test="studname != null">
+                studname,
+            </if>
+            <if test="studsex != null">
+                studsex,
+            </if>
+            <if test="studage != null">
+                studage,
+            </if>
+            <if test="studiden != null">
+                studiden,
+            </if>
+            <if test="major != null">
+                major,
+            </if>
+            <if test="sclass != null">
+                sclass,
+            </if>
+            <if test="grade != null">
+                grade,
+            </if>
+            <if test="education != null">
+                education,
+            </if>
+            <if test="dormitory != null">
+                dormitory,
+            </if>
+            <if test="studphone1 != null">
+                studphone1,
+            </if>
+            <if test="studphone2 != null">
+                studphone2,
+            </if>
+            <if test="birthplace != null">
+                birthplace,
+            </if>
+            <if test="adress != null">
+                adress,
+            </if>
+            <if test="familyphone != null">
+                familyphone,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="studid != null">
+                #{studid,jdbcType=VARCHAR},
+            </if>
+            <if test="studpass != null">
+                #{studpass,jdbcType=VARCHAR},
+            </if>
+            <if test="departId != null">
+                #{departId,jdbcType=VARCHAR},
+            </if>
+            <if test="studname != null">
+                #{studname,jdbcType=VARCHAR},
+            </if>
+            <if test="studsex != null">
+                #{studsex,jdbcType=VARCHAR},
+            </if>
+            <if test="studage != null">
+                #{studage,jdbcType=VARCHAR},
+            </if>
+            <if test="studiden != null">
+                #{studiden,jdbcType=VARCHAR},
+            </if>
+            <if test="major != null">
+                #{major,jdbcType=VARCHAR},
+            </if>
+            <if test="sclass != null">
+                #{sclass,jdbcType=VARCHAR},
+            </if>
+            <if test="grade != null">
+                #{grade,jdbcType=VARCHAR},
+            </if>
+            <if test="education != null">
+                #{education,jdbcType=VARCHAR},
+            </if>
+            <if test="dormitory != null">
+                #{dormitory,jdbcType=VARCHAR},
+            </if>
+            <if test="studphone1 != null">
+                #{studphone1,jdbcType=VARCHAR},
+            </if>
+            <if test="studphone2 != null">
+                #{studphone2,jdbcType=VARCHAR},
+            </if>
+            <if test="birthplace != null">
+                #{birthplace,jdbcType=VARCHAR},
+            </if>
+            <if test="adress != null">
+                #{adress,jdbcType=VARCHAR},
+            </if>
+            <if test="familyphone != null">
+                #{familyphone,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="zqu.lxqd.bean.Students">
+        update students
+        <set>
+            <if test="studpass != null">
+                studpass = #{studpass,jdbcType=VARCHAR},
+            </if>
+            <if test="departId != null">
+                departId = #{departId,jdbcType=VARCHAR},
+            </if>
+            <if test="studname != null">
+                studname = #{studname,jdbcType=VARCHAR},
+            </if>
+            <if test="studsex != null">
+                studsex = #{studsex,jdbcType=VARCHAR},
+            </if>
+            <if test="studage != null">
+                studage = #{studage,jdbcType=VARCHAR},
+            </if>
+            <if test="studiden != null">
+                studiden = #{studiden,jdbcType=VARCHAR},
+            </if>
+            <if test="major != null">
+                major = #{major,jdbcType=VARCHAR},
+            </if>
+            <if test="sclass != null">
+                sclass = #{sclass,jdbcType=VARCHAR},
+            </if>
+            <if test="grade != null">
+                grade = #{grade,jdbcType=VARCHAR},
+            </if>
+            <if test="education != null">
+                education = #{education,jdbcType=VARCHAR},
+            </if>
+            <if test="dormitory != null">
+                dormitory = #{dormitory,jdbcType=VARCHAR},
+            </if>
+            <if test="studphone1 != null">
+                studphone1 = #{studphone1,jdbcType=VARCHAR},
+            </if>
+            <if test="studphone2 != null">
+                studphone2 = #{studphone2,jdbcType=VARCHAR},
+            </if>
+            <if test="birthplace != null">
+                birthplace = #{birthplace,jdbcType=VARCHAR},
+            </if>
+            <if test="adress != null">
+                adress = #{adress,jdbcType=VARCHAR},
+            </if>
+            <if test="familyphone != null">
+                familyphone = #{familyphone,jdbcType=VARCHAR},
+            </if>
+            <if test="studphoto != null">
+                studphoto = #{studphoto,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where studid = #{studid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="zqu.lxqd.bean.Students">
+    update students
+    set studpass = #{studpass,jdbcType=VARCHAR},
+      departId = #{departId,jdbcType=VARCHAR},
+      studname = #{studname,jdbcType=VARCHAR},
+      studsex = #{studsex,jdbcType=VARCHAR},
+      studage = #{studage,jdbcType=VARCHAR},
+      studiden = #{studiden,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      sclass = #{sclass,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      dormitory = #{dormitory,jdbcType=VARCHAR},
+      studphone1 = #{studphone1,jdbcType=VARCHAR},
+      studphone2 = #{studphone2,jdbcType=VARCHAR},
+      birthplace = #{birthplace,jdbcType=VARCHAR},
+      adress = #{adress,jdbcType=VARCHAR},
+      familyphone = #{familyphone,jdbcType=VARCHAR},
+      studphoto = #{studphoto,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where studid = #{studid,jdbcType=VARCHAR}
+  </update>
+</mapper>

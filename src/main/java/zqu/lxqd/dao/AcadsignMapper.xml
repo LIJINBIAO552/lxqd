@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zqu.lxqd.dao.AcadsignMapper">
+  <resultMap id="BaseResultMap" type="zqu.lxqd.bean.Acadsign">
+    <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+    <id column="ItemBorrDesc" jdbcType="VARCHAR" property="itemborrdesc"/>
+    <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+    <result column="signtime" jdbcType="TIMESTAMP" property="signtime" />
+    <result column="sealer" jdbcType="VARCHAR" property="sealer" />
+    <result column="sealtime" jdbcType="TIMESTAMP" property="sealtime" />
+  </resultMap>
+  <resultMap id="StudentsResultMap" type="zqu.lxqd.bean.Acadsign">
+    <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+    <id column="ItemBorrDesc" jdbcType="VARCHAR" property="itemborrdesc"/>
+    <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+    <result column="signtime" jdbcType="TIMESTAMP" property="signtime" />
+    <association property="students" javaType="Students">
+      <id column="studid" jdbcType="VARCHAR" property="studid"/>
+      <result column="departId" jdbcType="VARCHAR" property="departId"/>
+      <result column="studname" jdbcType="VARCHAR" property="studname"/>
+      <result column="studsex" jdbcType="VARCHAR" property="studsex"/>
+      <result column="studage" jdbcType="VARCHAR" property="studage"/>
+      <result column="studiden" jdbcType="VARCHAR" property="studiden"/>
+      <result column="major" jdbcType="VARCHAR" property="major"/>
+      <result column="sclass" jdbcType="VARCHAR" property="sclass"/>
+      <result column="grade" jdbcType="VARCHAR" property="grade"/>
+      <result column="education" jdbcType="VARCHAR" property="education"/>
+      <result column="dormitory" jdbcType="VARCHAR" property="dormitory"/>
+      <result column="studphone1" jdbcType="VARCHAR" property="studphone1"/>
+      <result column="studphone2" jdbcType="VARCHAR" property="studphone2"/>
+      <result column="birthplace" jdbcType="VARCHAR" property="birthplace"/>
+      <result column="adress" jdbcType="VARCHAR" property="adress"/>
+      <result column="familyphone" jdbcType="VARCHAR" property="familyphone"/>
+      <result column="remark" jdbcType="VARCHAR" property="remark"/>
+      <association property="department" javaType="Department">
+        <id column="departid" jdbcType="VARCHAR" property="departid"/>
+        <result column="departname" jdbcType="VARCHAR" property="departname"/>
+      </association>
+    </association>
+    <association property="admin" javaType="Admin">
+      <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+      <result column="adminname" jdbcType="VARCHAR" property="adminname"/>
+    </association>
+    <association property="admin1" javaType="Admin">
+      <id column="sealer" jdbcType="VARCHAR" property="adminid"/>
+      <result column="adminname" jdbcType="VARCHAR" property="adminname"/>
+    </association>
+    <association property="clasteacsign" javaType="zqu.lxqd.bean.Clasteacsign">
+      <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+      <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+      <association property="admin" javaType="zqu.lxqd.bean.Admin">
+        <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+        <result column="clas1signnname" jdbcType="VARCHAR" property="adminname"/>
+      </association>
+    </association>
+    <association property="dormmana" javaType="zqu.lxqd.bean.Dormmana">
+      <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+      <result column="dormdesc1" jdbcType="VARCHAR" property="dormdesc" />
+      <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+      <association property="admin" javaType="zqu.lxqd.bean.Admin">
+        <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+        <result column="clas1signname" jdbcType="VARCHAR" property="adminname"/>
+      </association>
+    </association>
+    <association property="drinkwater" javaType="zqu.lxqd.bean.Drinkwater">
+      <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+      <result column="dwpay1" jdbcType="VARCHAR" property="dwpay" />
+      <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+      <association property="admin" javaType="zqu.lxqd.bean.Admin">
+        <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+        <result column="drin1signname" jdbcType="VARCHAR" property="adminname"/>
+      </association>
+    </association>
+    <association property="educandcomp" javaType="zqu.lxqd.bean.Educandcomp">
+      <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+      <result column="rentdesc1" jdbcType="VARCHAR" property="rentdesc" />
+      <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+      <collection property="admin" ofType="zqu.lxqd.bean.Admin">
+        <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+        <result column="educ1signname" jdbcType="VARCHAR" property="adminname"/>
+      </collection>
+    </association>
+    <association property="hotwater1" javaType="zqu.lxqd.bean.Hotwater1">
+      <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+      <result column="hw1pay1" jdbcType="VARCHAR" property="hw1pay" />
+      <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+      <collection property="admin" ofType="zqu.lxqd.bean.Admin">
+        <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+        <result column="hotwater111signname" jdbcType="VARCHAR" property="adminname"/>
+      </collection>
+    </association>
+    <association property="hotwater2" javaType="zqu.lxqd.bean.Hotwater2">
+      <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+      <result column="hw2pay1" jdbcType="VARCHAR" property="hw2pay" />
+      <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+      <collection property="admin" ofType="zqu.lxqd.bean.Admin">
+        <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+        <result column="hotwater211signname" jdbcType="VARCHAR" property="adminname"/>
+      </collection>
+    </association>
+    <association property="hydropower" javaType="zqu.lxqd.bean.Hydropower">
+      <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+      <result column="hydrpay1" jdbcType="VARCHAR" property="hydrpay" />
+      <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+      <association property="admin" javaType="zqu.lxqd.bean.Admin">
+        <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+        <result column="hydr1signname" jdbcType="VARCHAR" property="adminname"/>
+      </association>
+    </association>
+    <association property="library" javaType="zqu.lxqd.bean.Library">
+      <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+      <result column="nedesc1" jdbcType="VARCHAR" property="nedesc"/>
+      <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+      <result column="signtime" jdbcType="TIMESTAMP" property="signtime" />
+      <collection property="admin" ofType="zqu.lxqd.bean.Admin">
+        <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+        <result column="libr1signname" jdbcType="VARCHAR" property="adminname"/>
+      </collection>
+    </association>
+    <association property="logimana" javaType="zqu.lxqd.bean.Logimana">
+      <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+      <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+      <association property="admin" javaType="zqu.lxqd.bean.Admin">
+        <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+        <result column="logi1signname" jdbcType="VARCHAR" property="adminname"/>
+      </association>
+    </association>
+    <association property="studaffadivi" javaType="zqu.lxqd.bean.Studaffadivi">
+      <id column="stud_id" jdbcType="VARCHAR" property="studId" />
+      <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+      <association property="admin" javaType="zqu.lxqd.bean.Admin">
+        <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+        <result column="studaf1signname" jdbcType="VARCHAR" property="adminname"/>
+      </association>
+    </association>
+    <association property="suppcent" javaType="zqu.lxqd.bean.Suppcent">
+      <id column="stud_id" jdbcType="VARCHAR" property="studId"/>
+      <result column="suppdesc1" jdbcType="VARCHAR" property="suppdesc"/>
+      <result column="admin_id" jdbcType="VARCHAR" property="adminId"/>
+      <association property="admin" javaType="zqu.lxqd.bean.Admin">
+        <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+        <result column="supp1signname" jdbcType="VARCHAR" property="adminname"/>
+      </association>
+    </association>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    stud_id, admin_id, signtime
+  </sql>
+
+  <sql id="Base_select_column_list1">
+    stud_id,stu_depart.departname as departname,major,sclass,grade,education,studname,
+    studsex,studphone1,studphone2,adress,familyphone,admin_id, adminname, signtime,sealer, sealtime
+  </sql>
+  <sql id="Base_select_column_list">
+    acadsign.stud_id,stu_depart.departname as departname,major,sclass,grade,education,studname,
+    studsex,studphone1,studphone2,adress,familyphone,
+    suppcent1.suppsignname as supp1signname,suppcent1.suppdesc as suppdesc1,
+    dormmana1.dormsignname as dorm1signname,dormmana1.dormdesc as dormdesc1,
+    studaffadivi1.studafsignname as studaf1signname,
+    hydropower1.hydrsignname as hydr1signname,hydropower1.hydrpay as hydrpay1,
+    drinkwater1.drinsignname as drin1signname,drinkwater1.dwpay as dwpay1,
+    logimana1.logisignname as logi1signname,
+    library1.librsignname as libr1signname,library1.nedesc as nedesc1,
+    hotwater11.hotwater1signname as hotwater111signname,hotwater11.hw1pay as hw1pay1,
+    educandcomp1.educsignname as educ1signname,educandcomp1.rentdesc as rentdesc1,
+    hotwater21.hotwater2signname as hotwater211signname,hotwater21.hw2pay as hw2pay1,
+    clasteacsign1.classignname as clas1signname,
+    acadsign.itemborrdesc,acadsign.admin_id, admin.adminname, acadsign.signtime
+  </sql>
+
+  <select id="simpleSelectByStudents" parameterType="Students" resultMap="StudentsResultMap">
+    select
+    <include refid="Base_select_column_list"/>
+    from acadsign LEFT JOIN admin on admin.adminid in (acadsign.admin_id,sealer)
+    LEFT JOIN (select stud_id,adminname as suppsignname,suppdesc from suppcent,admin  where suppcent.admin_id = admin.adminid) as suppcent1 on suppcent1.stud_id =acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as dormsignname,dormdesc from dormmana,admin  where dormmana.admin_id = admin.adminid) as dormmana1 on dormmana1.stud_id = acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as studafsignname from studaffadivi,admin  where studaffadivi.admin_id = admin.adminid) as studaffadivi1 on studaffadivi1.stud_id = acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as hydrsignname,hydrpay from hydropower,admin where hydropower.admin_id =admin.adminid) as hydropower1 on hydropower1.stud_id =acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as drinsignname,dwpay from drinkwater,admin where drinkwater.admin_id =admin.adminid) as drinkwater1 on drinkwater1.stud_id = acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as logisignname from logimana,admin  where logimana.admin_id = admin.adminid) as logimana1 on logimana1.stud_id =acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as librsignname,nedesc from library,admin  where library.admin_id = admin.adminid) as library1 on library1.stud_id = acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as hotwater1signname,hw1pay from hotwater1,admin  where hotwater1.admin_id = admin.adminid) as hotwater11 on hotwater11.stud_id = acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as educsignname,rentdesc from educandcomp,admin  where educandcomp.admin_id = admin.adminid) as educandcomp1 on educandcomp1.stud_id = acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as hotwater2signname,hw2pay from hotwater2,admin  where hotwater2.admin_id = admin.adminid) as hotwater21 on hotwater21.stud_id = acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as classignname from clasteacsign,admin  where clasteacsign.admin_id = admin.adminid) as clasteacsign1 on clasteacsign1.stud_id = acadsign.stud_id
+    LEFT JOIN (SELECT studid,students.departId,departname,major,sclass,grade,education,studname,studsex,studphone1,studphone2,adress,familyphone
+    FROM students left join department ON students.departId = department.departid) as stu_depart on stu_depart.studid = acadsign.stud_id
+    <where>
+
+        <if test="studid != null and studid != ''">
+          studid = #{studid,jdbcType=VARCHAR}
+        </if>
+        <if test="departId != null and departId != ''">
+          and stu_depart.departId = #{departId,jdbcType=VARCHAR}
+        </if>
+        <if test="department != null and department.departname != null and department.departname != ''">
+          and stu_depart.departname like '%' #{department.departname,jdbcType=VARCHAR} '%'
+        </if>
+        <if test="major != null and major != ''">
+          and major like '%' #{major,jdbcType=VARCHAR} '%'
+        </if>
+        <if test="sclass != null and sclass != ''">
+          and sclass like '%' #{sclass,jdbcType=VARCHAR} '%'
+        </if>
+        <if test="grade != null and grade != ''">
+          and grade like '%' #{grade,jdbcType=VARCHAR} '%'
+        </if>
+        <if test="studname != null and studname != ''">
+          and studname like '%' #{studname,jdbcType=VARCHAR} '%'
+        </if>
+        <if test="studsex != null and studsex != ''">
+          and studsex = #{studsex,jdbcType=VARCHAR}
+        </if>
+
+    </where>
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from acadsign
+    where stud_id = #{studId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAllAcadsign" resultMap="StudentsResultMap">
+    select
+    <include refid="Base_select_column_list"/>
+    from acadsign LEFT JOIN admin on admin.adminid = acadsign.admin_id
+    LEFT JOIN (select stud_id,adminname as suppsignname,suppdesc from suppcent,admin  where suppcent.admin_id = admin.adminid) as suppcent1 on suppcent1.stud_id =acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as dormsignname,dormdesc from dormmana,admin  where dormmana.admin_id = admin.adminid) as dormmana1 on dormmana1.stud_id = acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as studafsignname from studaffadivi,admin  where studaffadivi.admin_id = admin.adminid) as studaffadivi1 on studaffadivi1.stud_id = acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as hydrsignname,hydrpay from hydropower,admin where hydropower.admin_id =admin.adminid) as hydropower1 on hydropower1.stud_id =acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as drinsignname,dwpay from drinkwater,admin where drinkwater.admin_id =admin.adminid) as drinkwater1 on drinkwater1.stud_id = acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as logisignname from logimana,admin  where logimana.admin_id = admin.adminid) as logimana1 on logimana1.stud_id =acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as librsignname,nedesc from library,admin  where library.admin_id = admin.adminid) as library1 on library1.stud_id = acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as hotwater1signname,hw1pay from hotwater1,admin  where hotwater1.admin_id = admin.adminid) as hotwater11 on hotwater11.stud_id = acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as educsignname,rentdesc from educandcomp,admin  where educandcomp.admin_id = admin.adminid) as educandcomp1 on educandcomp1.stud_id = acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as hotwater2signname,hw2pay from hotwater2,admin  where hotwater2.admin_id = admin.adminid) as hotwater21 on hotwater21.stud_id = acadsign.stud_id
+    LEFT JOIN (select stud_id,adminname as classignname from clasteacsign,admin  where clasteacsign.admin_id = admin.adminid) as clasteacsign1 on clasteacsign1.stud_id = acadsign.stud_id
+    LEFT JOIN (SELECT studid,students.departId,departname,major,sclass,grade,education,studname,studsex,studphone1,studphone2,adress,familyphone
+    FROM students left join department ON students.departId = department.departid) as stu_depart on stu_depart.studid = acadsign.stud_id
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from acadsign
+    where stud_id = #{studId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="zqu.lxqd.bean.Acadsign">
+    insert into acadsign (stud_id, admin_id, signtime
+      )
+    values (#{studId,jdbcType=VARCHAR}, #{adminId,jdbcType=VARCHAR}, #{signtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="zqu.lxqd.bean.Acadsign">
+    insert into acadsign
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studId != null">
+        stud_id,
+      </if>
+      <if test="itemborrdesc != null">
+        ItemBorrDesc,
+      </if>
+      <if test="adminId != null">
+        admin_id,
+      </if>
+      <if test="signtime != null">
+        signtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="studId != null">
+        #{studId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemborrdesc != null">
+        #{itemborrdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="signtime != null">
+        #{signtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="zqu.lxqd.bean.Acadsign">
+    update acadsign
+    <set>
+      <if test="adminId != null">
+        admin_id = #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemborrdesc != null">
+        ItemBorrDesc = #{itemborrdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="signtime != null">
+        signtime = #{signtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where stud_id = #{studId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zqu.lxqd.bean.Acadsign">
+    update acadsign
+    set admin_id = #{adminId,jdbcType=VARCHAR},
+    ItemBorrDesc = #{itemborrdesc,jdbcType=TIMESTAMP},
+      signtime = #{signtime,jdbcType=TIMESTAMP}
+    where stud_id = #{studId,jdbcType=VARCHAR}
+  </update>
+</mapper>

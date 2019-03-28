@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zqu.lxqd.dao.AdminMapper">
+    <resultMap id="BaseResultMap" type="zqu.lxqd.bean.Admin">
+        <id column="adminid" jdbcType="VARCHAR" property="adminid"/>
+        <result column="adminpass" jdbcType="VARCHAR" property="adminpass"/>
+        <result column="adminname" jdbcType="VARCHAR" property="adminname"/>
+        <result column="adminsex" jdbcType="VARCHAR" property="adminsex"/>
+        <result column="departid" jdbcType="VARCHAR" property="departid"/>
+        <result column="adminiden" jdbcType="VARCHAR" property="adminiden"/>
+        <result column="adminphone" jdbcType="VARCHAR" property="adminphone"/>
+        <result column="adminmail" jdbcType="VARCHAR" property="adminmail"/>
+        <association property="department" javaType="zqu.lxqd.bean.Department">
+            <id column="departid" jdbcType="VARCHAR" property="departid"/>
+            <result column="departname" jdbcType="VARCHAR" property="departname"/>
+        </association>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="zqu.lxqd.bean.Admin">
+        <result column="adminPhoto" jdbcType="LONGVARCHAR" property="adminphoto"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    adminid, adminpass, adminname, adminsex, `admin`.departid, department.departname as departname, adminiden, adminphone,
+    adminmail
+  </sql>
+    <sql id="Blob_Column_List">
+    adminPhoto
+  </sql>
+
+    <select id="selectByAdmin" parameterType="Admin" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from admin,department
+        <where>
+            `admin`.departid = department.departid and
+            <choose>
+                <when test="adminid != null and adminid != ''">
+                    adminid = #{adminid,jdbcType=VARCHAR}
+                </when>
+                <when test="adminname != null and adminname != ''">
+                    and adminname like '%' #{adminname,jdbcType=VARCHAR} '%'
+                </when>
+                <when test="departname != null and departname != ''">
+                    and departname like '%'#{departname,jdbcType=VARCHAR} '%'
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from admin,department
+        where `admin`.departid = department.departid
+        and adminid = #{adminid,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectLikePrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from admin,department
+        where `admin`.departid = department.departid
+        and adminid like '%' #{adminid,jdbcType=VARCHAR} '%'
+    </select>
+
+    <select id="selectByName" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from admin,department
+        where `admin`.departid = department.departid
+        and adminname like '%' #{partName,jdbcType=VARCHAR} '%'
+    </select>
+
+    <select id="selectAllAdmins" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from admin,department
+        where `admin`.departid = department.departid
+    </select>
+
+    <select id="selectAllAdminsBylimit" parameterType="java.util.Map" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from admin,department
+        where `admin`.departid = department.departid
+        <if test="page != null and limit != null">
+              limit #{page},#{limit}
+        </if>
+    </select>
+
+    <select id="countAllAdmins" resultType="java.lang.Integer">
+        select count(*)
+        from admin
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from admin
+    where adminid = #{adminid,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="zqu.lxqd.bean.Admin">
+    insert into admin (adminid, adminpass, adminname, 
+      adminsex, departid
+      adminiden, adminphone, adminmail, 
+      adminPhoto)
+    values (#{adminid,jdbcType=VARCHAR}, #{adminpass,jdbcType=VARCHAR}, #{adminname,jdbcType=VARCHAR}, 
+      #{adminsex,jdbcType=VARCHAR}, #{departid,jdbcType=VARCHAR},
+      #{adminiden,jdbcType=VARCHAR}, #{adminphone,jdbcType=VARCHAR}, #{adminmail,jdbcType=VARCHAR}, 
+      #{adminphoto,jdbcType=LONGVARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="zqu.lxqd.bean.Admin">
+        insert into admin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="adminid != null">
+                adminid,
+            </if>
+            <if test="adminpass != null">
+                adminpass,
+            </if>
+            <if test="adminname != null">
+                adminname,
+            </if>
+            <if test="adminsex != null">
+                adminsex,
+            </if>
+            <if test="departid != null">
+                departid,
+            </if>
+            <if test="adminiden != null">
+                adminiden,
+            </if>
+            <if test="adminphone != null">
+                adminphone,
+            </if>
+            <if test="adminmail != null">
+                adminmail,
+            </if>
+            <if test="adminphoto != null">
+                adminPhoto,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="adminid != null">
+                #{adminid,jdbcType=VARCHAR},
+            </if>
+            <if test="adminpass != null">
+                #{adminpass,jdbcType=VARCHAR},
+            </if>
+            <if test="adminname != null">
+                #{adminname,jdbcType=VARCHAR},
+            </if>
+            <if test="adminsex != null">
+                #{adminsex,jdbcType=VARCHAR},
+            </if>
+            <if test="departid != null">
+                #{departid,jdbcType=VARCHAR},
+            </if>
+            <if test="adminiden != null">
+                #{adminiden,jdbcType=VARCHAR},
+            </if>
+            <if test="adminphone != null">
+                #{adminphone,jdbcType=VARCHAR},
+            </if>
+            <if test="adminmail != null">
+                #{adminmail,jdbcType=VARCHAR},
+            </if>
+            <if test="adminphoto != null">
+                #{adminphoto,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="zqu.lxqd.bean.Admin">
+        update admin
+        <set>
+            <if test="adminpass != null">
+                adminpass = #{adminpass,jdbcType=VARCHAR},
+            </if>
+            <if test="adminname != null">
+                adminname = #{adminname,jdbcType=VARCHAR},
+            </if>
+            <if test="adminsex != null">
+                adminsex = #{adminsex,jdbcType=VARCHAR},
+            </if>
+            <if test="departid != null">
+                departid = #{departid,jdbcType=VARCHAR},
+            </if>
+            <if test="adminiden != null">
+                adminiden = #{adminiden,jdbcType=VARCHAR},
+            </if>
+            <if test="adminphone != null">
+                adminphone = #{adminphone,jdbcType=VARCHAR},
+            </if>
+            <if test="adminmail != null">
+                adminmail = #{adminmail,jdbcType=VARCHAR},
+            </if>
+            <if test="adminphoto != null">
+                adminPhoto = #{adminphoto,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where adminid = #{adminid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="zqu.lxqd.bean.Admin">
+    update admin
+    set adminpass = #{adminpass,jdbcType=VARCHAR},
+      adminname = #{adminname,jdbcType=VARCHAR},
+      adminsex = #{adminsex,jdbcType=VARCHAR},
+      departid = #{departid,jdbcType=VARCHAR},
+      adminiden = #{adminiden,jdbcType=VARCHAR},
+      adminphone = #{adminphone,jdbcType=VARCHAR},
+      adminmail = #{adminmail,jdbcType=VARCHAR},
+      adminPhoto = #{adminphoto,jdbcType=LONGVARCHAR}
+    where adminid = #{adminid,jdbcType=VARCHAR}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="zqu.lxqd.bean.Admin">
+    update admin
+    set adminpass = #{adminpass,jdbcType=VARCHAR},
+      adminname = #{adminname,jdbcType=VARCHAR},
+      adminsex = #{adminsex,jdbcType=VARCHAR},
+      departid = #{departid,jdbcType=VARCHAR},
+      adminiden = #{adminiden,jdbcType=VARCHAR},
+      adminphone = #{adminphone,jdbcType=VARCHAR},
+      adminmail = #{adminmail,jdbcType=VARCHAR}
+    where adminid = #{adminid,jdbcType=VARCHAR}
+  </update>
+</mapper>

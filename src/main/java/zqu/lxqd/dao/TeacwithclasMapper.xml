@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zqu.lxqd.dao.TeacwithclasMapper">
+  <resultMap id="BaseResultMap" type="zqu.lxqd.bean.Teacwithclas">
+    <id column="twcid" jdbcType="INTEGER" property="twcid" />
+    <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+    <result column="smajor" jdbcType="VARCHAR" property="smajor" />
+    <result column="ssclass" jdbcType="VARCHAR" property="ssclass" />
+    <result column="sgrade" jdbcType="VARCHAR" property="sgrade" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    twcid, admin_id, smajor, ssclass, sgrade
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from teacwithclas
+    where twcid = #{twcid,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectTeacwithclasByTeacwithclas" parameterType="zqu.lxqd.bean.Teacwithclas" resultMap="BaseResultMap">
+    select distinct
+    <include refid="Base_Column_List" />
+    from teacwithclas
+    <where>
+      <choose>
+        <when test="twcid != null and twcid != ''">
+          twcid = #{twcid,jdbcType=INTEGER}
+        </when>
+        <when test="adminId != null and adminId != ''">
+          admin_id = #{adminId,jdbcType=INTEGER}
+        </when>
+        <when test="smajor != null and smajor != ''">
+          smajor like '%' #{smajor,jdbcType=INTEGER} '%'
+        </when>
+        <when test="ssclass != null and ssclass != ''">
+          ssclass like '%' #{ssclass,jdbcType=INTEGER} '%'
+        </when>
+        <when test="sgrade != null and sgrade != ''">
+          sgrade like '%' #{sgrade,jdbcType=INTEGER} '%'
+        </when>
+      </choose>
+
+    </where>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from teacwithclas
+    where twcid = #{twcid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="zqu.lxqd.bean.Teacwithclas">
+    insert into teacwithclas (twcid, admin_id, smajor, 
+      ssclass, sgrade)
+    values (#{twcid,jdbcType=INTEGER}, #{adminId,jdbcType=VARCHAR}, #{smajor,jdbcType=VARCHAR}, 
+      #{ssclass,jdbcType=VARCHAR}, #{sgrade,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="zqu.lxqd.bean.Teacwithclas">
+    insert into teacwithclas
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="twcid != null">
+        twcid,
+      </if>
+      <if test="adminId != null">
+        admin_id,
+      </if>
+      <if test="smajor != null">
+        smajor,
+      </if>
+      <if test="ssclass != null">
+        ssclass,
+      </if>
+      <if test="sgrade != null">
+        sgrade,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="twcid != null">
+        #{twcid,jdbcType=INTEGER},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="smajor != null">
+        #{smajor,jdbcType=VARCHAR},
+      </if>
+      <if test="ssclass != null">
+        #{ssclass,jdbcType=VARCHAR},
+      </if>
+      <if test="sgrade != null">
+        #{sgrade,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="zqu.lxqd.bean.Teacwithclas">
+    update teacwithclas
+    <set>
+      <if test="adminId != null">
+        admin_id = #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="smajor != null">
+        smajor = #{smajor,jdbcType=VARCHAR},
+      </if>
+      <if test="ssclass != null">
+        ssclass = #{ssclass,jdbcType=VARCHAR},
+      </if>
+      <if test="sgrade != null">
+        sgrade = #{sgrade,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where twcid = #{twcid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zqu.lxqd.bean.Teacwithclas">
+    update teacwithclas
+    set admin_id = #{adminId,jdbcType=VARCHAR},
+      smajor = #{smajor,jdbcType=VARCHAR},
+      ssclass = #{ssclass,jdbcType=VARCHAR},
+      sgrade = #{sgrade,jdbcType=VARCHAR}
+    where twcid = #{twcid,jdbcType=INTEGER}
+  </update>
+</mapper>

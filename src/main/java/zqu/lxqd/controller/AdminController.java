@@ -75,9 +75,6 @@ public class AdminController {
     public String doLogin(String adminid, String adminPass, String checkRemem,
 //                          String captcha,
                           HttpSession session, HttpServletResponse response) {
-        // 获取Kaptcha jar包里面的KAPTCHA_SESSION_KEY
-//        String trueCaptcha = (String)session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
-//        if(trueCaptcha.toLowerCase().equals(captcha.toLowerCase())) {
         // 判断输入的账号密码是否为空
         if (adminid != null && adminPass != null) {
             //限制用户登录
@@ -166,11 +163,6 @@ public class AdminController {
             return "用户名和密码不能为空，请重新输入!";
         }
     }
-//        else {
-//            return "验证码错误，请重新输入！";
-//        }
-//
-//    }
 
     //    跳转到主界面
     @RequestMapping("adminMain.do")
